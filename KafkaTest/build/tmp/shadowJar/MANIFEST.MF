@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path: slf4j-nop-2.0.3.jar kafka-clients-3.3.1.jar jackson-annotati
+ ons-2.15.2.jar jackson-core-2.15.2.jar jackson-databind-2.15.2.jar slf4
+ j-api-2.0.3.jar
+Main-Class: examples.ProducerExample
+
