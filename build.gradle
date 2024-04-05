@@ -1,0 +1,29 @@
+plugins {
+  id 'java'
+  id "application"
+}
+
+version = "1.0.0"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.36'
+  implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.3.1'
+}
+
+ext {
+  javaMainClass = "example.main"
+}
+
+application {
+  mainClass.set(javaMainClass)
+}
+
+jar {
+  manifest {
+    attributes "Main-Class": javaMainClass
+  }
+}
