@@ -210,7 +210,7 @@ DEFAULT_JVM_OPTS=""
 
 set -- \
         -classpath "$CLASSPATH" \
-        example.ClientExample \
+        example.AWOOGAExample \
         "$@"
 
 # Stop when "xargs" is not available.

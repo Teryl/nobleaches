@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\KafkaTest-1.0.0.jar;%APP_HOME%\lib\slf4j-nop-1.7.36
 
 
 @rem Execute KafkaTest
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %KAFKA_TEST_OPTS%  -classpath "%CLASSPATH%" example.ClientExample %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %KAFKA_TEST_OPTS%  -classpath "%CLASSPATH%" example.AWOOGAExample %*
 
 :end
 @rem End local scope for the variables with windows NT shell
