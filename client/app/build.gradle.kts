@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
 }
 
+version = "1.0.0"
+
 android {
     namespace = "com.example.nobleaches"
     compileSdk = 34
@@ -29,6 +31,8 @@ android {
 }
 
 dependencies {
+    /// implementation("org.slf4j:slf4j-nop:1.7.36")
+    /// implementation("org.apache.kafka:kafka-clients:3.3.1")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
