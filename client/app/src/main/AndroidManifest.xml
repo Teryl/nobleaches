@@ -73,6 +73,7 @@
             android:name=".Settings"
             android:exported="true">
         </activity>
+        <service android:name=".MachineUpdateService" />
     </application>
 
 </manifest>

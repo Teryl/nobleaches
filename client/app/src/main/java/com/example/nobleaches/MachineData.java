@@ -1,18 +1,25 @@
 package com.example.nobleaches;
 
+import android.util.Log;
+
 public class MachineData {
     private String Type;
     private String Status;
     private String Block;
     private String Last_used;
+    private String machineTopic;
 
-    public MachineData(String Type, String Status, String Block,String Last_used) {
+    public MachineData(String Type, String Status, String Block,String Last_used, String machineTopic) {
         this.Type = Type;
         this.Status = Status;
         this.Block = Block;
         this.Last_used = Last_used;
+        this.machineTopic = machineTopic;
     }
 
+    public String getMachineTopic() {
+        return machineTopic;
+    }
 
     public String getType() {
         System.out.println(Type);
@@ -38,6 +45,7 @@ public class MachineData {
 
     public void setStatus(String status) {
         Status = status;
+        Log.d("Status Update", "Status updated to: "+ status);
     }
 
     public void setBlock(String block) {
@@ -47,4 +55,6 @@ public class MachineData {
     public void setLast_used(String last_used) {
         Last_used = last_used;
     }
+
+    public void setMachineTopic(String machineTopic) { this.machineTopic = machineTopic; }
 }
