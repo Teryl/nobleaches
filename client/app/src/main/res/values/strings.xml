@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">nobleaches_client</string>
+    <string name="app_name">NoBleaches</string>
+    <string name="laundry">Laundry</string>
+    <string name="Washer1">Washer 1</string>
+    <string name="Reserved">Reserved</string>
+    <string name="History">History</string>
+    <string name="Settings">Settings</string>
+    <string name="no_bleaches">No Bleaches</string>
+    <string name="reserve_a_machine_in_seconds">Reserve a machine in seconds</string>
+    <string name="reservations_cannot_be_made_as_guests_nlog_in_or_register_using_sutd_email">Reservations cannot be made as Guests\nLog in or Register using SUTD email</string>
+    <string name="register">Register</string>
+    <string name="send_otp_to_email">Send OTP to email</string>
+    <string name="log_in">LOG IN</string>
+    <string name="otp">OTP</string>
+    <string name="guest">Guest</string>
+    <string name="student_id">Student_ID</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>
