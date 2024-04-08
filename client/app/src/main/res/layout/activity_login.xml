@@ -27,18 +27,15 @@
         android:layout_marginTop="20dp"
         android:background="@android:color/darker_gray" />
 
-
-
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Student_ID_Hint"
+        android:id="@+id/Email_Hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Student ID"
+        android:hint="School Email ID"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Student_ID"
+            android:id="@+id/Email_Input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

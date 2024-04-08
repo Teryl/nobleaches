@@ -41,7 +41,7 @@ public class Home extends AppCompatActivity {
         Profile_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userData.getUserName().equals("Guest")){
+                if (userData.getUserId().equals("Guest")){
                     Intent intent = new Intent(Home.this, Register.class);
                     startActivity(intent);
                 }

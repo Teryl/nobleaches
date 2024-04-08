@@ -1,8 +1,6 @@
 package com.example.nobleaches;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,15 +10,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Profile extends AppCompatActivity {
+    private FirebaseAuth mAuth;
+
     private UserData userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        mAuth = FirebaseAuth.getInstance();
 
         userData = UserDataManager.getInstance(getApplicationContext()).getUserData();
         TextView Name = findViewById(R.id.Name);
@@ -34,8 +35,6 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
         LinearLayout My_Profile_Button = findViewById(R.id.My_Profile);
         My_Profile_Button.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +71,14 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the new activity
+                mAuth.signOut();
+
+                UserDataManager.getInstance(getApplicationContext()).saveUserDataToDataManager(null);
+
                 Intent intent = new Intent(Profile.this, Authentication.class);
                 startActivity(intent);
+
+                finish();
             }
         });
 
