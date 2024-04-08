@@ -10,15 +10,20 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Authentication extends AppCompatActivity {
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Check if already logged in
-        SharedPreferences prefs = getSharedPreferences("login_pref", MODE_PRIVATE);
-        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
-        if (isLoggedIn) {
+        mAuth = FirebaseAuth.getInstance();
+
+        UserDataManager userDataManager = UserDataManager.getInstance(getApplicationContext());
+
+        if (userDataManager.isLoggedIn() && mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(Authentication.this, Home.class);
             startActivity(intent);
             finish();

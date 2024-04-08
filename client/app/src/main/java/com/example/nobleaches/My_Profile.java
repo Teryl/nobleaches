@@ -18,11 +18,9 @@ public class My_Profile extends AppCompatActivity {
 
         userData = UserDataManager.getInstance(getApplicationContext()).getUserData();
         TextView Name = findViewById(R.id.Name_Profile);
-        TextView Student_ID = findViewById(R.id.Student_ID_Profile);
         TextView Email = findViewById(R.id.Email_Profile);
 
         Name.setText(userData.getUserName());
-        Student_ID.setText((userData.getUserId()));
         Email.setText(userData.getUserEmail());
 
         ImageButton back_button = findViewById(R.id.backButton);

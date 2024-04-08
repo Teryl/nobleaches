@@ -18,7 +18,7 @@ public class UserData {
     }
 
     public UserData(String Guest){
-        this.userName = Guest;
+        this.userId = Guest;
     }
 
     // Getters and setters
@@ -56,6 +56,11 @@ public class UserData {
 
     public List getUserHistory() {
         return userHistory;
+    }
+
+    @Override
+    public String toString() {
+        return "UserData { email: " + userEmail + ", password: " + userPassword + ", userId: " + userId + ", userName: " + userName + " }";
     }
 }
 

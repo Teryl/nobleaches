@@ -1,5 +1,6 @@
 package com.example.nobleaches;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import android.content.Context;
@@ -30,6 +31,16 @@ public class UserDataManager {
         editor.apply();
     }
 
+    public void saveFirebaseUser(FirebaseUser firebaseUser) {
+        UserData userData = new UserData(firebaseUser.getUid(), firebaseUser.getDisplayName(), "", firebaseUser.getEmail());
+        saveUserData(userData);
+    }
+
+    public void saveFirebaseUserWithDispName(FirebaseUser firebaseUser, String displayName) {
+        UserData userData = new UserData(firebaseUser.getUid(), displayName, "", firebaseUser.getEmail());
+        saveUserData(userData);
+    }
+
     public UserData getUserData() {
         Gson gson = new Gson();
         String userDataJson = sharedPreferences.getString(USER_DATA_KEY, null);
@@ -40,4 +51,6 @@ public class UserDataManager {
     public void saveUserDataToDataManager(UserData userData) {
         saveUserData(userData);
     }
+
+    public Boolean isLoggedIn() { return getUserData() != null; }
 }
