@@ -16,4 +16,7 @@
     <string name="student_id">Student_ID</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
+    <string name="SchoolPassword">School Password</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="Password">Password</string>
 </resources>

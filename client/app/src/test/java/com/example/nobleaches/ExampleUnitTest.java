@@ -1,4 +1,4 @@
-package com.example.nobleaches_client;
+package com.example.nobleaches;
 
 import org.junit.Test;
 

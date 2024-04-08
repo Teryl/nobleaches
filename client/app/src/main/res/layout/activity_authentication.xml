@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="180dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="200dp"
+        android:text="@string/reserve_a_machine_in_seconds"
+        android:layout_gravity="center"
+        android:gravity= "center"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        >
+
+    </TextView>
+
+    <TextView
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:text="@string/reservations_cannot_be_made_as_guests_nlog_in_or_register_using_sutd_email"
+        android:layout_gravity="center"
+        android:gravity= "center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        >
+
+    </TextView>
+
+    <Button
+        android:id="@+id/LogInButton"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:text="@string/log_in"
+        android:textColor="@color/white"
+        android:background="@drawable/round_corners_bg_black"
+        >
+    </Button>
+
+    <Button
+        android:id="@+id/RegisterButton"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="@string/register"
+        android:textColor="@color/black"
+        android:background="@drawable/round_corners_bg_gray"
+        >
+    </Button>
+
+    <Button
+        android:id="@+id/GuestButton"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="@string/guest"
+        android:textColor="@color/black"
+        android:background="@drawable/round_corners_bg_gray"
+        >
+    </Button>
+
+
+
+</LinearLayout>
