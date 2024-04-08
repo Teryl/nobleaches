@@ -1,0 +1,117 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"NONE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"23176cf5-5c73-417d-9d4b-c9ba13c635f4\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/.gitignore\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/.gitignore\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/build.gradle.kts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/build.gradle.kts\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/proguard-rules.pro\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/proguard-rules.pro\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/AndroidManifest.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/AndroidManifest.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_background.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_background.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_foreground.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_foreground.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/values-night/themes.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/values-night/themes.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/values/colors.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/values/colors.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/values/strings.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/values/strings.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/values/themes.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/values/themes.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/xml/backup_rules.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/xml/backup_rules.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/app/src/main/res/xml/data_extraction_rules.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/app/src/main/res/xml/data_extraction_rules.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/build.gradle.kts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/build.gradle.kts\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/gradle.properties\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/gradle.properties\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.properties\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.properties\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/gradlew\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/gradlew\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/client/settings.gradle.kts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/client/settings.gradle.kts\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ClangdSettings\">\n    <option name=\"formatViaClangd\" value=\"false\" />\n  </component>\n  <component name=\"ExternalProjectsData\">\n    <projectState path=\"$PROJECT_DIR$\">\n      <ProjectState />\n    </projectState>\n  </component>\n  <component name=\"ExternalProjectsManager\">\n    <system id=\"GRADLE\">\n      <state>\n        <projects_view>\n          <tree_state>\n            <expand>\n              <path>\n                <item name=\"\" type=\"6a2764b6:ExternalProjectsStructure$RootNode\" />\n                <item name=\"nobleaches\" type=\"f1a62948:ProjectNode\" />\n              </path>\n            </expand>\n            <select />\n          </tree_state>\n        </projects_view>\n      </state>\n    </system>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 4\n}</component>\n  <component name=\"ProjectId\" id=\"2efv8ihlcM2G9kGx9fFzytk8ZOQ\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"RunOnceActivity.cidr.known.project.marker\": \"true\",\n    \"cf.first.check.clang-format\": \"false\",\n    \"cidr.known.project.marker\": \"true\",\n    \"git-widget-placeholder\": \"main\",\n    \"last_opened_file_path\": \"C:/Users/Saif/AndroidStudioProjects/nobleaches\"\n  }\n}]]></component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"23176cf5-5c73-417d-9d4b-c9ba13c635f4\" name=\"Changes\" comment=\"\" />\n      <created>1712308290074</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1712308290074</updated>\n    </task>\n    <servers />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c52dc47cadc417fcbca04c31617a465c1aceb5fd)
++++ b/.idea/workspace.xml	(date 1712579229952)
+@@ -5,26 +5,24 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="23176cf5-5c73-417d-9d4b-c9ba13c635f4" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/.gradle/8.0.2/checksums/checksums.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.0.2/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.0.2/dependencies-accessors/gc.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.0.2/fileChanges/last-build.bin" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.0.2/fileHashes/fileHashes.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.0.2/gc.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.7/checksums/checksums.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.7/dependencies-accessors/gc.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.7/fileChanges/last-build.bin" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/8.7/gc.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/build.gradle.kts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/proguard-rules.pro" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/AndroidManifest.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_foreground.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/values-night/themes.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/values/colors.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/values/strings.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/values/themes.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/xml/backup_rules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/xml/data_extraction_rules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/client/build.gradle.kts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradle.properties" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradlew" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/client/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/client/settings.gradle.kts" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -44,12 +42,7 @@
+       <state>
+         <projects_view>
+           <tree_state>
+-            <expand>
+-              <path>
+-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+-                <item name="nobleaches" type="f1a62948:ProjectNode" />
+-              </path>
+-            </expand>
++            <expand />
+             <select />
+           </tree_state>
+         </projects_view>
+@@ -79,7 +72,7 @@
+     "cf.first.check.clang-format": "false",
+     "cidr.known.project.marker": "true",
+     "git-widget-placeholder": "main",
+-    "last_opened_file_path": "C:/Users/Saif/AndroidStudioProjects/nobleaches"
++    "last_opened_file_path": "/home/Phineas/Projects/nobleaches"
+   }
+ }]]></component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+Index: .gradle/buildOutputCleanup/cache.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+new file mode 100755
+--- /dev/null	(date 1712579097490)
++++ b/.gradle/buildOutputCleanup/cache.properties	(date 1712579097490)
+@@ -0,0 +1,2 @@
++#Mon Apr 08 20:24:57 SGT 2024
++gradle.version=8.2
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/local.properties b/local.properties
+new file mode 100755
+--- /dev/null	(date 1712579145930)
++++ b/local.properties	(date 1712579145930)
+@@ -0,0 +1,8 @@
++## This file must *NOT* be checked into Version Control Systems,
++# as it contains information specific to your local configuration.
++#
++# Location of the SDK. This is only used by Gradle.
++# For customization when using a Version Control System, please read the
++# header note.
++#Mon Apr 08 20:25:45 SGT 2024
++sdk.dir=/home/mithun/Android/Sdk
+diff --git a/.gradle/8.7/dependencies-accessors/gc.properties b/.gradle/8.7/dependencies-accessors/gc.properties
+new file mode 100755
+diff --git a/.gradle/8.0.2/gc.properties b/.gradle/8.0.2/gc.properties
+new file mode 100755
+diff --git a/.gradle/8.0.2/dependencies-accessors/gc.properties b/.gradle/8.0.2/dependencies-accessors/gc.properties
+new file mode 100755
+diff --git a/.gradle/vcs-1/gc.properties b/.gradle/vcs-1/gc.properties
+new file mode 100755
+diff --git a/.gradle/8.7/gc.properties b/.gradle/8.7/gc.properties
+new file mode 100755
