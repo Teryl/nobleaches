@@ -3,8 +3,6 @@ package com.example.nobleaches;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHolder> {
-    private ArrayList<MachineData> machineList;
-    private Context context;
+    private ArrayList<MachineData> machineDisplayList;
 
+    Handler rHandler = new Handler();
 
-    public MachineAdapter() {
-        this.machineList = new ArrayList<>();
-        machineList.add(new MachineData("Washer 1", "Available", "Block 55", "20/3/2024 9:23PM", "washer_1"));
-        machineList.add(new MachineData("Washer 2", "59 mins left", "Block 57", "20/3/2024 9:23PM", "washer_2"));
-        machineList.add(new MachineData("Dryer 1", "38 mins left", "Block 59", "21/3/2024 10:00AM", "dryer_1"));
-        machineList.add(new MachineData("Dryer 2", "Available", "Block 57", "21/3/2024 11:11AM", "dryer_2"));
-
-
+    public MachineAdapter(List<MachineData> machineDataList) {
+        this.machineDisplayList = new ArrayList<>(machineDataList);
     }
 
     @NonNull
@@ -42,30 +34,44 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MachineData machine = machineList.get(position);
-        holder.buttonWasher.setText(machine.getType());
+        MachineData machine = machineDisplayList.get(position);
+        holder.buttonWasher.setText(machine.getName());
         holder.textStatus.setText(machine.getStatus());
 
         //Adding machineList to global machineList
-        MachineListReader.getInstance().setMachineList(machineList);
+        MachineListReader.getInstance().setMachineList(machineDisplayList);
+
+        Runnable refresh = new Runnable() {
+            @Override
+            public void run() {
+                MachineData machine = machineDisplayList.get(position);
+                holder.buttonWasher.setText(machine.getName());
+                holder.textStatus.setText(machine.getStatus());
+                rHandler.postDelayed(this, GlobalConfig.getInstance().getUpdateInterval());
+            }
+        };
+        rHandler.postDelayed(refresh, GlobalConfig.getInstance().getUpdateInterval());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = holder.itemView.getContext();
                 Intent intent = new Intent(context, Machine.class);
-                intent.putExtra("machine_Type", machine.getType());
+                intent.putExtra("machine_Type", machine.getName());
                 intent.putExtra("machine_Block", machine.getBlock());
                 intent.putExtra("machine_Status", machine.getStatus());
-                intent.putExtra("machine_LastUsed", machine.getLast_used());
+                intent.putExtra("machine_LastUsed", machine.getLastUsed());
                 context.startActivity(intent);
             }
         });
     }
 
+
+
+
     @Override
     public int getItemCount() {
-        return machineList.size();
+        return machineDisplayList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -78,4 +84,11 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
             textStatus = itemView.findViewById(R.id.textStatus);
         }
     }
+
+    public void updateData(List<MachineData> newData) {
+        machineDisplayList.clear();
+        machineDisplayList.addAll(newData);
+        notifyDataSetChanged();
+    }
+
 }

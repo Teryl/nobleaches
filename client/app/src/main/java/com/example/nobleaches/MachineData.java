@@ -2,18 +2,20 @@ package com.example.nobleaches;
 
 import android.util.Log;
 
+import java.util.List;
+
 public class MachineData {
-    private String Type;
-    private String Status;
-    private String Block;
-    private String Last_used;
+    private String name;
+    private String status;
+    private String block;
+    private String lastUsed;
     private String machineTopic;
 
-    public MachineData(String Type, String Status, String Block,String Last_used, String machineTopic) {
-        this.Type = Type;
-        this.Status = Status;
-        this.Block = Block;
-        this.Last_used = Last_used;
+    public MachineData(String name, String Status, String Block, String lastUsed, String machineTopic) {
+        this.name = name;
+        this.status = Status;
+        this.block = Block;
+        this.lastUsed = lastUsed;
         this.machineTopic = machineTopic;
     }
 
@@ -21,40 +23,51 @@ public class MachineData {
         return machineTopic;
     }
 
-    public String getType() {
-        System.out.println(Type);
-        return Type;
+    public String getName() {
+        return name;
     }
 
     public String getStatus() {
-        System.out.println(Status);
-        return Status;
+        return status;
     }
 
     public String getBlock() {
-        return Block;
+        return block;
     }
 
-    public String getLast_used() {
-        return Last_used;
+    public String getLastUsed() {
+        return lastUsed;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
         Log.d("Status Update", "Status updated to: "+ status);
     }
 
     public void setBlock(String block) {
-        Block = block;
+        this.block = block;
     }
 
-    public void setLast_used(String last_used) {
-        Last_used = last_used;
+    public void setLastUsed(String lastUsed) {
+        this.lastUsed = lastUsed;
     }
 
     public void setMachineTopic(String machineTopic) { this.machineTopic = machineTopic; }
+
+    public static MachineData searchByName(String name, List<MachineData> machineList) {
+        for (MachineData machine : machineList) {
+            if (machine.getName().equals(name)) {
+                return machine;
+            }
+        }
+
+        //Log error otherwise
+        Log.d("Machine Error", "Machine not found");
+        return null;
+    }
+
 }

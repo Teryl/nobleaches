@@ -1,0 +1,36 @@
+{
+  "$id": "http://example.com/myURI.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "Status of Washer 1",
+  "properties": {
+    "block": {
+      "description": "machine block location",
+      "type": "string"
+    },
+    "lastUsed": {
+      "description": "time last used",
+      "type": "string"
+    },
+    "machineTopic": {
+      "description": "the name of the single topic this machine is posting to",
+      "type": "string"
+    },
+    "name": {
+      "description": "machine name",
+      "type": "string"
+    },
+    "status": {
+      "description": "machine status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "status",
+    "block",
+    "lastUsed"
+  ],
+  "title": "washer_1",
+  "type": "object"
+}

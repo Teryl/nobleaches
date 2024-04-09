@@ -1,11 +1,8 @@
 package com.example.nobleaches;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.content.Context;
-import android.renderscript.ScriptGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        ConfigReader.getInstance().setConfig(config);
+        GlobalConfig.getInstance().setConfig(config);
 
         new Handler().postDelayed(new Runnable() {
             @Override

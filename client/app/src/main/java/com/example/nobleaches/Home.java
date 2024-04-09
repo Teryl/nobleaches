@@ -16,6 +16,8 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Intent intent = getIntent();
+
+
         if (intent != null) {
             String source = intent.getStringExtra("source");
             if (source != null && (source.equals("Authentication") ||
