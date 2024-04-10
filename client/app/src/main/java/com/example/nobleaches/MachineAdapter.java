@@ -17,10 +17,12 @@ import java.util.List;
 
 public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHolder> {
     private ArrayList<MachineData> machineDisplayList;
+    private final Context context;
 
     Handler rHandler = new Handler();
 
-    public MachineAdapter(List<MachineData> machineDataList) {
+    public MachineAdapter(Context context, List<MachineData> machineDataList) {
+        this.context = context;
         this.machineDisplayList = new ArrayList<>(machineDataList);
     }
 
@@ -38,8 +40,21 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
         holder.buttonWasher.setText(machine.getName());
         holder.textStatus.setText(machine.getStatus());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = holder.itemView.getContext();
+                Intent intent = new Intent(context, Machine.class);
+                intent.putExtra("machine_Type", machine.getName());
+                intent.putExtra("machine_Block", machine.getBlock());
+                intent.putExtra("machine_Status", machine.getStatus());
+                intent.putExtra("machine_LastUsed", machine.getLastUsed());
+                context.startActivity(intent);
+            }
+        });
+
         //Adding machineList to global machineList
-        MachineListReader.getInstance().setMachineList(machineDisplayList);
+        MachineListReader.getInstance(context).setMachineList(machineDisplayList);
 
         Runnable refresh = new Runnable() {
             @Override
