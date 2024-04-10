@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "4587227677",
+    "project_id": "nobleaches-80ab2",
+    "storage_bucket": "nobleaches-80ab2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4587227677:android:5f5c2282451f3cbf7fd4f4",
+        "android_client_info": {
+          "package_name": "com.example.nobleaches"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcbDepCUdRrwhoM3XUS-qgW2mFq0AvSRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

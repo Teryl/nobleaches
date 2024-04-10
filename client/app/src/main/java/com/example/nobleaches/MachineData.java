@@ -45,7 +45,7 @@ public class MachineData {
 
     public void setStatus(String status) {
         this.status = status;
-        Log.d("Status Update", "Status updated to: "+ status);
+//        Log.d("Status Update", "Status updated to: "+ status);
     }
 
     public void setBlock(String block) {
