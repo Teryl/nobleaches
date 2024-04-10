@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
     private boolean isBound = false;
     private Handler mHandler = new Handler();
     private Runnable refresherRunnable;
+    private View dimView;
+    private View filter_overlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,40 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
                 startActivity(intent);
             }
         });
+
+        Button Filter_Button = findViewById(R.id.filter_button);
+        dimView = findViewById(R.id.dimView_filter);
+        filter_overlay = findViewById(R.id.filter_overlay);
+
+        Filter_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dimView.setVisibility(View.VISIBLE);
+                filter_overlay.setVisibility(View.VISIBLE);
+
+
+                ImageButton Close_Button = findViewById(R.id.filter_close_button);
+                Button Find_Filter_Button = findViewById(R.id.Find_Filter_Button);
+
+                Close_Button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dimView.setVisibility(View.GONE);
+                        filter_overlay.setVisibility(View.GONE);
+                    }
+                });
+
+                Find_Filter_Button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dimView.setVisibility(View.GONE);
+                        filter_overlay.setVisibility(View.GONE);
+                        //Trigger MachineAdapter sort
+                    }
+                });
+
+            }
+        });
     }
 
     // Define ServiceConnection to get reference to MachineUpdateService
@@ -64,7 +101,7 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
 
             // Once connected to the service, initialize the adapter with the machineList
             if (machineUpdateService != null) {
-                adapter = new MachineAdapter(machineUpdateService.getMachineList());
+                adapter = new MachineAdapter(Laundry.this,machineUpdateService.getMachineList());
                 machineUpdateService.setListener(Laundry.this);
                 mRecyclerView.setAdapter(adapter);
             }

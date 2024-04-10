@@ -19,15 +19,20 @@ public class Machine extends AppCompatActivity {
     private SeekBar timerSeekBar;
     private TextView selectedDurationTextView;
     private final Handler handler = new Handler();
+    private MachineData machineData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_machine);
+        MachineListReader machinelist = MachineListReader.getInstance(getApplicationContext());
+
         Intent intent = getIntent();
         String machineType = intent.getStringExtra("machine_Type");
         String machineStatus = intent.getStringExtra("machine_Status");
         String machineBlock = intent.getStringExtra("machine_Block");
         String machineLastUsed = intent.getStringExtra("machine_LastUsed");
+
+        machineData = machinelist.getMachineDataByType(machineType);
 
         TextView Type = findViewById(R.id.Type);
         TextView Availability = findViewById(R.id.availabilityTextView);
@@ -37,7 +42,11 @@ public class Machine extends AppCompatActivity {
         Type.setText(machineType);
         Availability.setText(machineStatus);
         Block.setText(machineBlock);
-        LastUsed.setText(machineLastUsed);
+        if (machineStatus != null && !machineStatus.equals("Available")) {
+            LastUsed.setVisibility(View.GONE);
+        } else {
+            LastUsed.setText(machineLastUsed);
+        }
 
 
         ImageButton back_button = findViewById(R.id.backButton);
@@ -63,10 +72,24 @@ public class Machine extends AppCompatActivity {
                     return;
                 }
 
+                machinelist.getMachineDataByType(machineType).setStatus("Reserved");
+                LastUsed.setVisibility(View.GONE);
+
                 TextView availabilityTextView = findViewById(R.id.availabilityTextView);
                 availabilityTextView.setText(getString(R.string.Reserved));
                 dimView.setVisibility(View.VISIBLE);
                 overlayReserve.setVisibility(View.VISIBLE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        machineData.setStatus("Available");
+                        availabilityTextView.setText("Available");
+
+                        dimView.setVisibility(View.GONE);
+                        overlayReserve.setVisibility(View.GONE);
+                    }
+                }, 8000);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -117,6 +140,13 @@ public class Machine extends AppCompatActivity {
                 inner_start_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int selectedDuration = timerSeekBar.getProgress() + 30;
+                        String machineStatus = selectedDuration + " mins left";
+
+                        // Set the machine status
+                        machinelist.getMachineDataByType(machineType).setStatus(machineStatus);
+
+                        // Update the availability TextView
                         TextView availabilityTextView = findViewById(R.id.availabilityTextView);
                         availabilityTextView.setText(timerSeekBar.getProgress() + 30 + " minutes left");
                         dimView.setVisibility(View.VISIBLE);
