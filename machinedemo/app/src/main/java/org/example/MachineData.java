@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 public class MachineData {
     String name;
     String status;
@@ -14,6 +16,15 @@ public class MachineData {
         this.block = block;
         this.lastUsed = lastUsed;
         this.machineTopic = machineTopic;
+    }
+
+    // Default constructor
+    public MachineData() {
+        this.name = "";
+        this.status = "";
+        this.block = "";
+        this.lastUsed = "";
+        this.machineTopic = "";
     }
     
     // Getters

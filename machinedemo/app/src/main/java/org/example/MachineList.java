@@ -13,7 +13,7 @@ public class MachineList {
         machines.add(machine);
     }
 
-    public List<MachineData> getMachines() {
+    public List<MachineData> getMachineList() {
         return machines;
     }
 }

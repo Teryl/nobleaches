@@ -2,14 +2,7 @@ package org.example;
 
 import java.io.*;
 import java.nio.file.*;
-import java.lang.System;
 import java.util.*;
-import java.time.*;
-
-import org.apache.kafka.clients.producer.*;
-import org.apache.kafka.clients.consumer.*;
-
-import com.google.gson.Gson;
 
 public class App {
 
@@ -36,7 +29,7 @@ public class App {
         MachineList block59Machines = new MachineList();
 
         // Adding test machines to each list
-        block55Machines.addMachine(new MachineData("Machine 1", "Available", "55", "2022-01-01", "block-55"));
+        block55Machines.addMachine(new MachineData("Washer 1", "Available", "55", "2022-01-01", "block-55"));
         block55Machines.addMachine(new MachineData("Dryer 1", "Available", "55", "2022-01-01", "block-55"));
 
         block59Machines.addMachine(new MachineData("Washer 2", "Available", "59", "2022-01-01", "block-59"));

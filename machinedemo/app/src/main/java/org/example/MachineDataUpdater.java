@@ -1,15 +1,11 @@
 package org.example;
 
-import java.io.*;
-import java.nio.file.*;
+
 import java.lang.System;
 import java.util.*;
-import java.time.*;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.clients.consumer.*;
-
-import com.google.gson.Gson;
 
 class MachineDataUpdater implements Runnable {
     private MachineList machineList;
@@ -37,7 +33,7 @@ class MachineDataUpdater implements Runnable {
 
     private void updateMachineStatus(Producer<String, String> producer) {
         // Logic to update machine status
-        for (MachineData machine : machineList.getMachines()) {
+        for (MachineData machine : machineList.getMachineList()) {
             // Example logic to update status
             // Randomly select a status
             String[] statuses = {"Available", "Booked", "In Use", "Under Maintenance"};
