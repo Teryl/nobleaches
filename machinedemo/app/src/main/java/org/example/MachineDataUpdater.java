@@ -36,7 +36,7 @@ class MachineDataUpdater implements Runnable {
         for (MachineData machine : machineList.getMachineList()) {
             // Example logic to update status
             // Randomly select a status
-            String[] statuses = {"Available", "Booked", "In Use", "Under Maintenance"};
+            String[] statuses = {"Available", "Booked", "In Use", "Maintenance"};
             int randomIndex = (int) (Math.random() * statuses.length);
             String newStatus = statuses[randomIndex];
             machine.setStatus(newStatus);
