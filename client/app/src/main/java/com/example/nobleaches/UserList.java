@@ -22,4 +22,8 @@ public class UserList {
     public void addUser(UserData user) {
         userList.add(user);
     }
+
+    public List<UserData> getUserDataList() {
+        return userList;
+    }
 }

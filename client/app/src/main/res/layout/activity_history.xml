@@ -37,104 +37,15 @@
             android:background="@android:color/darker_gray" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUserHistory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        >
-        <!-- Layout content goes here -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/Machine1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <!-- Add your views here -->
-                <Button
-                    android:id="@+id/Washer1"
-                    android:layout_width="150dp"
-                    android:layout_height="220dp"
-                    android:background="@android:color/transparent"
-                    android:drawableTop="@drawable/laundry"
-                    android:text="Washer 1"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/myTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="-25dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Date: 17/2/24\nTime: 1400 - 1500"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <!-- Add your views here -->
-                <Button
-                    android:id="@+id/Washer2"
-                    android:layout_width="150dp"
-                    android:layout_height="220dp"
-                    android:background="@android:color/transparent"
-                    android:drawableTop="@drawable/laundry"
-                    android:text="Washer 2"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/myTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="-25dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Date: 17/2/24\nTime: 1400 - 1500"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <!-- Add your views here -->
-                <Button
-                    android:id="@+id/Washer3"
-                    android:layout_width="150dp"
-                    android:layout_height="220dp"
-                    android:background="@android:color/transparent"
-                    android:drawableTop="@drawable/laundry"
-                    android:text="Washer 3"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/myTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="-25dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Date: 17/2/24\nTime: 1400 - 1500"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp" />
-            </LinearLayout>
-        </LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_history" />
 
 
     </ScrollView>

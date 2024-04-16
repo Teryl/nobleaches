@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class History extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private HistoryAdapter historyAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +23,15 @@ public class History extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Find RecyclerView
+        recyclerView = findViewById(R.id.recyclerViewUserHistory);
+
+        // Create and set HistoryAdapter
+        historyAdapter = new HistoryAdapter(this);
+        recyclerView.setAdapter(historyAdapter);
+
+        // Set LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
