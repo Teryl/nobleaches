@@ -1,3 +1,4 @@
 # Ignore API key file
 api-key.txt
 local.properties
+client/.idea/deploymentTargetDropDown.xml
