@@ -1,28 +1,29 @@
+package com.example.nobleaches;
+
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nobleaches.R;
-import com.example.nobleaches.UserData;
-import com.example.nobleaches.UserHistory;
-import com.example.nobleaches.UserListSingleton;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private Context context;
     private List<UserData> userDataList;
+    private List<HistoryRecord> historyRecordList;
 
-    public HistoryAdapter(Context context) {
+    public HistoryAdapter(Context context, List<HistoryRecord> historyRecordList) {
         this.context = context;
-        this.userDataList = UserListSingleton.getInstance().getUserList();
+        this.historyRecordList = historyRecordList;
     }
 
     @NonNull
@@ -34,42 +35,71 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        UserData userData = userDataList.get(position);
-        holder.bind(userData);
+        HistoryRecord historyRecord = historyRecordList.get(position);
+        holder.bind(historyRecord);
     }
 
     @Override
     public int getItemCount() {
-        return userDataList.size();
+        return historyRecordList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView userNameTextView;
-        private LinearLayout historyLayout;
+        private TextView machineNameTextView;
+        private TextView dateTextView;
+        private TextView timeTextView;
+        private TextView processedTextView;
+        private TextView rTimeTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            userNameTextView = itemView.findViewById(R.id.userNameTextView);
-            historyLayout = itemView.findViewById(R.id.historyLayout);
+            machineNameTextView = itemView.findViewById(R.id.machineNameTextView);
+            dateTextView = itemView.findViewById(R.id.dateTextView);
+            timeTextView = itemView.findViewById(R.id.timeTextView);
+            processedTextView = itemView.findViewById(R.id.processedTextView);
+            rTimeTextView = itemView.findViewById(R.id.rTimeTextView);
         }
 
-        public void bind(UserData userData) {
-            userNameTextView.setText(userData.getUserName());
-            historyLayout.removeAllViews(); // Clear previous views
-
-            List<UserHistory> userHistoryList = userData.getUserHistoryList();
-            for (UserHistory userHistory : userHistoryList) {
-                View historyView = LayoutInflater.from(context).inflate(R.layout.item_machine_history, null);
-                TextView machineNameTextView = historyView.findViewById(R.id.machineNameTextView);
-                TextView dateTextView = historyView.findViewById(R.id.dateTextView);
-                TextView timeTextView = historyView.findViewById(R.id.timeTextView);
-
-                machineNameTextView.setText("Machine: " + userHistory.getMachineName());
-                dateTextView.setText("Date: " + userHistory.getDate());
-                timeTextView.setText("Time: " + userHistory.getTime());
-
-                historyLayout.addView(historyView); // Add view to LinearLayout
+        public void bind(HistoryRecord historyRecord) {
+            // Set request date
+            Date recordDate = historyRecord.getRequestTime();
+            if (recordDate != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                String formattedDate = dateFormat.format(recordDate);
+                dateTextView.setText(String.format("Date: %s", formattedDate));
+            } else {
+                dateTextView.setText("Date: N/A");
             }
+
+            // Set request time
+            if (recordDate != null) {
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                String formattedTime = timeFormat.format(recordDate);
+                timeTextView.setText(String.format("Time: %s", formattedTime));
+            } else {
+                timeTextView.setText("Time: N/A");
+            }
+
+            // Set processed status
+            Date processedDate = historyRecord.getProcessedOn();
+            if (processedDate != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
+                String formattedProcessedOn = dateFormat.format(processedDate);
+                processedTextView.setText(String.format("Processed on: %s", formattedProcessedOn));
+            } else {
+                processedTextView.setText("Processed on: N/A");
+            }
+
+            // Set processed status
+            if (processedDate != null) {
+                Date reserveDate = Date.from(processedDate.toInstant().plusMillis(3600000));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
+                String formattedProcessedOn = dateFormat.format(reserveDate);
+                rTimeTextView.setText(String.format("Reserved for: %s", formattedProcessedOn));
+            } else {
+                rTimeTextView.setText("Reserved for: N/A");
+            }
+            machineNameTextView.setText(String.format("%s-%s", historyRecord.getMachine().getName(), historyRecord.getMachine().getBlock()));
         }
     }
 }

@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHolder> {
-    private ArrayList<MachineData> machineDisplayList;
+    private ArrayList<MachineData> machineList;
     private final Context context;
 
     Handler rHandler = new Handler();
 
     public MachineAdapter(Context context, List<MachineData> machineDataList) {
         this.context = context;
-        this.machineDisplayList = new ArrayList<>(machineDataList);
+        this.machineList = new ArrayList<>(machineDataList);
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MachineData machine = machineDisplayList.get(position);
+        MachineData machine = machineList.get(position);
         holder.buttonWasher.setText(machine.getName());
         holder.textStatus.setText(machine.getStatus());
 
@@ -54,18 +54,31 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
         });
 
         //Adding machineList to global machineList
-        MachineListReader.getInstance(context).setMachineList(machineDisplayList);
+        MachineListReader.getInstance(context).setMachineList(machineList);
+
+
+        // Deprecated refresher code -> has been moved to MachineUpdaterService and Laundry.
+//        Runnable refresh = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (position < machineList.size()) {
+//                    MachineData machine = machineList.get(position);
+//                    holder.buttonWasher.setText(machine.getName());
+//                    holder.textStatus.setText(machine.getStatus());
+//                }
+//                rHandler.postDelayed(this, GlobalConfig.getInstance().getUpdateInterval());
+//            }
+//        };
+//        rHandler.postDelayed(refresh, GlobalConfig.getInstance().getUpdateInterval());
 
         Runnable refresh = new Runnable() {
             @Override
             public void run() {
-                MachineData machine = machineDisplayList.get(position);
                 holder.buttonWasher.setText(machine.getName());
                 holder.textStatus.setText(machine.getStatus());
-                rHandler.postDelayed(this, GlobalConfig.getInstance().getUpdateInterval());
             }
         };
-        rHandler.postDelayed(refresh, GlobalConfig.getInstance().getUpdateInterval());
+        rHandler.post(refresh);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,12 +94,9 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
         });
     }
 
-
-
-
     @Override
     public int getItemCount() {
-        return machineDisplayList.size();
+        return machineList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,8 +111,8 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
     }
 
     public void updateData(List<MachineData> newData) {
-        machineDisplayList.clear();
-        machineDisplayList.addAll(newData);
+        machineList.clear();
+        machineList.addAll(newData);
         notifyDataSetChanged();
     }
 

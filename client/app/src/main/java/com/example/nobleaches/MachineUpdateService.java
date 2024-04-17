@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +16,7 @@ import java.util.List;
 
 public class MachineUpdateService extends Service {
     private List<MachineData> machineList;
+    private List<MachineData> filteredMachineList;
     private Handler handler;
     private final IBinder binder = new LocalBinder();
     private MachineUpdateListener refreshListener;
@@ -33,6 +33,8 @@ public class MachineUpdateService extends Service {
 
         // Listen for changes in Firebase Realtime Database
         dbRef.addValueEventListener(machineDataListener);
+
+        handler.postDelayed(periodicUpdateTask, 500);
     }
 
     @Override
@@ -57,33 +59,15 @@ public class MachineUpdateService extends Service {
         return binder;
     }
 
-//    private Runnable updateStatusTask = new Runnable() {
-//        @Override
-//        public void run() {
-//            // Code to update each machine
-//            for (MachineData machine : machineList) {
-//
-//                // Broadcast changes
-//                Intent intent = new Intent("machine_status_updated");
-//                intent.putExtra("machine_type", machine.getName());
-//                intent.putExtra("machine_status", machine.getStatus());
-//                sendBroadcast(intent);
-//            }
-//
-//            // Schedule Update
-//            handler.postDelayed(this, UPDATE_INTERVAL);
-//        }
-//    };
-
     public void setListener(MachineUpdateListener listener) {
         this.refreshListener = listener;
     }
 
-    private void updateAdapter(List<MachineData> newData) {
-        if (refreshListener != null) {
-            refreshListener.onMachineDataUpdate(newData);
-        }
-    }
+//    private void updateAdapter(List<MachineData> newData) {
+//        if (refreshListener != null) {
+//            refreshListener.onMachineDataUpdate(newData);
+//        }
+//    }
 
     private ValueEventListener machineDataListener = new ValueEventListener() {
         @Override
@@ -107,6 +91,7 @@ public class MachineUpdateService extends Service {
             // Notify the listener
             if (refreshListener != null) {
                 refreshListener.onMachineDataUpdate(machineList);
+                Log.d("MachineUpdateService", "Machine List changed by service");
             }
         }
 
@@ -117,13 +102,25 @@ public class MachineUpdateService extends Service {
         }
     };
 
+    private Runnable periodicUpdateTask = new Runnable() {
+        @Override
+        public void run() {
+            // Update the listener with the most recent machine list every 5 seconds
+            if (refreshListener != null) {
+                refreshListener.onMachineDataUpdate(machineList);
+                Log.d("MachineUpdateService", "Periodic listener update");
+            }
+            // Schedule the next update after 5 seconds
+            handler.postDelayed(this, GlobalConfig.getInstance().getUpdateInterval());
+        }
+    };
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         // Remove ValueEventListener to avoid memory leaks
         dbRef.removeEventListener(machineDataListener);
         // Remove updates when service is destroyed
-//        handler.removeCallbacks(updateStatusTask);
         Log.d("Machine Updater Service", "Stopped");
     }
 }

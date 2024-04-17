@@ -3,33 +3,32 @@ package org.example;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.database.*;
+import com.google.cloud.firestore.*;
 import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.protocol.types.Field.Str;
 import org.apache.kafka.common.serialization.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.concurrent.*;
-import java.util.function.Function;
+import java.nio.file.*;
+import java.io.*;
+import com.google.api.core.ApiFuture;
+import com.google.common.util.concurrent.MoreExecutors;
 
-import java.nio.file.Files;
 import java.util.*;
-import java.util.function.Consumer;
 
-import javax.xml.crypto.Data;
 import java.time.Duration;
-import java.time.Duration;
-import java.util.stream.Collectors;
-import org.example.MachineList;
+
+import org.example.GlobalConfig;
 
 public class Main {
-    private static final String TOPIC1 = "block-55";
-    private static final String TOPIC2 = "block-59";
-    private static final String UUID = "Hp9rUAG4kXO5NvrCjqBBHPkKqaq2";
-    private static final String DATABASE_URL = "https://nobleaches-80ab2-default-rtdb.asia-southeast1.firebasedatabase.app";
+    private static final String TOPIC1 = GlobalConfig.TOPIC1;
+    private static final String TOPIC2 = GlobalConfig.TOPIC2;
+    private static final String TOPIC3 = GlobalConfig.TOPIC3;
+    private static final String DATABASE_URL = GlobalConfig.DATABASE_URL;
+    private static Properties config;
 
     public static Properties readConfig(final String configFile) throws IOException {
         if (!Files.exists(Paths.get(configFile))) {
@@ -45,40 +44,50 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        // Initialize Firebase
-        FileInputStream serviceAccount = new FileInputStream("admin-creds.json");
-        FirebaseOptions options = new FirebaseOptions.Builder()
+        try {
+            // Load the service account key JSON file
+            FileInputStream serviceAccount = new FileInputStream("admin-creds.json");
+
+            // Initialize the app with a service account, granting admin privileges
+            FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl(DATABASE_URL)
                 .build();
-        FirebaseApp.initializeApp(options);
+
+            FirebaseApp.initializeApp(options);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            config = readConfig("client.properties");
+            config.put(ConsumerConfig.GROUP_ID_CONFIG, "backend-server");
+            config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+            config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+            config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.example.MachineListSerializer");
+
+            config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+            config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.example.KafkaBookingRequestSerializer");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GlobalConfig.getInstance().setConfig(config);
 
         // Get a reference to the database
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("Machines");
+        DatabaseReference ref = GlobalConfig.getInstance().ref;
+        DatabaseReference bookingRef = GlobalConfig.getInstance().bookingRef;
 
         // Initialize Kafka consumer
-        Properties props = readConfig("client.properties");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "backend-server");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.example.MachineListSerializer");
-
-        // Create a thread pool
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-
-        // Define the topics
-        String topic1 = "block-55";
-        String topic2 = "block-59";
+        Properties config = GlobalConfig.getInstance().getConfig();
 
         // Create a ScheduledExecutorService
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(3);
 
         // Schedule the polling and updating tasks for the first topic
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                pollTopic(topic1, props);
-                updateFirebase(machineDataMap, ref);
+                pollTopic(TOPIC1, config);
+                updateFirebase();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,26 +96,40 @@ public class Main {
         // Schedule the polling and updating tasks for the second topic
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                pollTopic(topic2, props);
-                updateFirebase(machineDataMap, ref);
+                pollTopic(TOPIC2, config);
+                updateFirebase();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }, 0, 2, TimeUnit.SECONDS);
+
+        // Schedule the polling and updating tasks for the third topic
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                pollTopic(TOPIC3, config);
+                updateFirebase();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 0, 2, TimeUnit.SECONDS);
+
+        // Listen for booking requests in Firebase
+        listenForBookingRequests(bookingRef);
     }
 
-    private static void pollTopic(String topic, Properties props) {
+    private static void pollTopic(String topic, Properties config) {
         // Create a new Kafka consumer
-        KafkaConsumer<String, MachineList> consumer = new KafkaConsumer<>(props);
+        KafkaConsumer<String, MachineList> consumer = new KafkaConsumer<>(config);
     
         // Subscribe to the topic
         consumer.subscribe(Collections.singletonList(topic));
     
         // Poll the topic
-        ConsumerRecords<String, MachineList> records = consumer.poll(1000);
+        ConsumerRecords<String, MachineList> records = consumer.poll(Duration.ofMillis(1000));
         for (ConsumerRecord<String, MachineList> record : records) {
             for (MachineData machineData : record.value().getMachineList()) {
-                machineDataMap.put(machineData.getName(), machineData);
+                String key = topic + "-" + machineData.getName();
+                machineDataMap.put(key, machineData);
             }
         }
     
@@ -115,37 +138,115 @@ public class Main {
 
     private static Map<String, MachineData> machineDataMap = new HashMap<>();
 
-    private static MachineList processRecords(ConsumerRecords<String, MachineList> records) {
-        for (ConsumerRecord<String, MachineList> record : records) {
-            for (MachineData machineData : record.value().getMachineList()) {
-                // Update the MachineData in the map
-                machineDataMap.put(machineData.getName(), machineData);
-            }
-        }
-
-        // Create a new MachineList from the map values
-        MachineList machineList = new MachineList();
-        machineList.getMachineList().addAll(machineDataMap.values());
-
-        return machineList;
-    }
-
-    private static void updateFirebase(Map<String, MachineData> machineDataMap, DatabaseReference ref) {
+    private static void updateFirebase() {
+        // Get a reference to the database
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("Machines");
+        
         // Synchronize on machineDataMap to prevent concurrent modifications
         synchronized (machineDataMap) {
             // Create a local copy of the machine data map values
             List<MachineData> localMachineList = new ArrayList<>(machineDataMap.values());
-    
+
             ref.setValue(localMachineList, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                     if (databaseError != null) {
                         System.out.println("Data could not be saved " + databaseError.getMessage());
                     } else {
-                        System.out.println("Data saved successfully." + localMachineList);
+                        // System.out.println("Data saved successfully." + localMachineList);
                     }
                 }
             });
         }
+    }
+
+    private static void listenForBookingRequests(DatabaseReference ref) {
+        DatabaseReference bookinRef = FirebaseDatabase.getInstance().getReference("BookingRequests");
+        bookinRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String json = snapshot.getValue(String.class);
+                    BookingRequest bookingRequest = GlobalConfig.getInstance().gson.fromJson(json, BookingRequest.class);
+                    System.out.println(bookingRequest.getBookingUUID());
+                    bookingRequest.setProcessedOn();
+                    if (bookingRequest != null) {
+                        // Schedule message posting to Kafka topic
+                        scheduleMessageToKafka(bookingRequest);
+                        // Add booking request to Firestore
+                        addBookingToFirestore(bookingRequest);
+                        // Delete the request from Firebase Realtime Database
+                        dataSnapshot.getRef().removeValue((databaseError, databaseReference) -> {
+                            if (databaseError != null) {
+                                System.out.println("Data could not be deleted " + databaseError.getMessage());
+                            } else {
+                                System.out.println("Data deleted from realtime db successfully.");
+                            }
+                        });
+                    }
+                }
+            }
+
+            private void addBookingToFirestore(BookingRequest bookingRequest) {
+                Firestore db = FirestoreClient.getFirestore();
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("bookingUUID", bookingRequest.getBookingUUID());
+                data.put("userUUID", bookingRequest.getUserUUID());
+                data.put("machine", bookingRequest.getMachine());
+                data.put("requestTime", bookingRequest.getRequestTime());
+                data.put("processedOn", bookingRequest.getProcessedOn());
+
+                db.collection(GlobalConfig.FIRESTORE_COLLECTION)
+                    .document(bookingRequest.getBookingUUID())
+                    .set(data);
+                System.out.println("Booking added to Firestore");
+            }
+
+
+            private void scheduleMessageToKafka(BookingRequest bookingRequest) {
+                // Get the current time
+                long currentTime = System.currentTimeMillis();
+            
+                // Convert the Time object to a Date object
+                Date requestDate = new Date(bookingRequest.getRequestTime().getTime());
+
+                // Calculate the delay until the booking request time
+                long delay = TimeUnit.SECONDS.toMillis(15);
+            
+                // Create a new scheduled executor service
+                ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+                System.out.println("Scheduling message to Kafka");
+            
+                // Schedule the Kafka message
+                executor.schedule(() -> {
+                    // Create a new Kafka producer
+                    KafkaProducer<String, KafkaBookingRequest> producer = new KafkaProducer<>(GlobalConfig.getInstance().getConfig());
+                    
+                    // Create custom safe object
+                    KafkaBookingRequest kafkaBookingRequest = new KafkaBookingRequest(bookingRequest.getBookingUUID(), bookingRequest.getMachine().getBlock(), bookingRequest.getMachine().getName());
+
+                    // Create a new producer record
+                    ProducerRecord<String, KafkaBookingRequest> record = new ProducerRecord<>(GlobalConfig.KAFKA_TOPIC, kafkaBookingRequest);
+            
+                    // Send the record to the Kafka topic
+                    producer.send(record);
+                    System.out.println("Message sent to Kafka");
+            
+                    // Close the producer
+                    producer.close();
+                }, delay, TimeUnit.MILLISECONDS);
+            
+                // Shutdown the executor
+                executor.shutdown();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 }

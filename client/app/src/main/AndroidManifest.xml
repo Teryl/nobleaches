@@ -14,7 +14,7 @@
 
 
         <activity
-            android:name=".MainActivity"
+            android:name=".My_Profile$MainActivity"
             android:exported="true"
             android:theme="@style/LaunchTheme"
             >

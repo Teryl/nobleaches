@@ -7,15 +7,18 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nobleaches.MachineUpdateService;
+import com.google.android.material.chip.Chip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Laundry extends AppCompatActivity implements MachineUpdateListener {
@@ -24,9 +27,17 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
     private MachineUpdateService machineUpdateService;
     private boolean isBound = false;
     private Handler mHandler = new Handler();
+    Intent updater;
     private Runnable refresherRunnable;
     private View dimView;
     private View filter_overlay;
+    private List<MachineData> mainMachineList = new ArrayList<>();
+    private List<MachineData> displayMachineList = new ArrayList<>();
+    boolean block55Selected = false;
+    boolean block57Selected = false;
+    boolean block59Selected = false;
+    boolean washerSelected = false;
+    boolean dryerSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +45,7 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
         setContentView(R.layout.activity_laundry);
 
         // Starting Updater Service
-        Intent updater = new Intent(this, MachineUpdateService.class);
+        updater = new Intent(this, MachineUpdateService.class);
         startService(updater);
 
         // Bind to MachineUpdateService
@@ -53,6 +64,7 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Home.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -66,9 +78,55 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
                 dimView.setVisibility(View.VISIBLE);
                 filter_overlay.setVisibility(View.VISIBLE);
 
+                Chip block55Chip= findViewById(R.id.chip_block_55);
+                Chip block57Chip= findViewById(R.id.chip_block_57);
+                Chip block59Chip= findViewById(R.id.chip_block_59);
+                Chip washerChip= findViewById(R.id.chip_washer);
+                Chip dryerChip= findViewById(R.id.chip_dryer);
+
 
                 ImageButton Close_Button = findViewById(R.id.filter_close_button);
                 Button Find_Filter_Button = findViewById(R.id.Find_Filter_Button);
+
+                block55Chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        block55Selected = isChecked;
+                        Log.d("Laundry.java", "55 set to "+block55Selected);
+                    }
+                });
+
+                block57Chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        block57Selected = isChecked;
+                        Log.d("Laundry.java", "57 set to "+block57Selected);
+                    }
+                });
+
+                block59Chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        block59Selected = isChecked;
+                        Log.d("Laundry.java", "59 set to "+block59Selected);
+                    }
+                });
+
+                washerChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        washerSelected = isChecked;
+                        Log.d("Laundry.java", "Washer set to "+washerSelected);
+                    }
+                });
+
+                dryerChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        dryerSelected = isChecked;
+                        Log.d("Laundry.java", "Dryer set to "+dryerSelected);
+                    }
+                });
 
                 Close_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -78,12 +136,13 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
                     }
                 });
 
+
                 Find_Filter_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dimView.setVisibility(View.GONE);
                         filter_overlay.setVisibility(View.GONE);
-                        //Trigger MachineAdapter sort
+                        onMachineDataUpdate(mainMachineList);
                     }
                 });
 
@@ -116,9 +175,24 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
     };
 
     public void onMachineDataUpdate(List<MachineData> machineList) {
-        // Update UI with the new machine data
-        adapter.updateData(machineList); // Assuming you have a method in your adapter to update the data
+        mainMachineList.clear();
+        displayMachineList.clear();
+        mainMachineList.addAll(machineList);
+        for (MachineData machine : mainMachineList) {
+            // Check if the machine matches the filter criteria
+            if ((!washerSelected || machine.getName().toLowerCase().contains("washer")) &&
+                    (!dryerSelected || machine.getName().toLowerCase().contains("dryer")) &&
+                    (!block55Selected || machine.getBlock().equals("55")) &&
+                    (!block57Selected || machine.getBlock().equals("57")) &&
+                    (!block59Selected || machine.getBlock().equals("59"))) {
+                // Add the machine to the filtered list
+                displayMachineList.add(machine);
+            }
+        }
+
+        adapter.updateData(displayMachineList);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -127,5 +201,7 @@ public class Laundry extends AppCompatActivity implements MachineUpdateListener 
             unbindService(serviceConnection);
             isBound = false;
         }
+        stopService(updater);
+        Log.d("Laundry.java", "Killed Updater");
     }
 }

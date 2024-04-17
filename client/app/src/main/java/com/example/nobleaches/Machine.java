@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
 public class Machine extends AppCompatActivity {
     private View dimView;
     private View overlayReserve;
@@ -27,27 +29,22 @@ public class Machine extends AppCompatActivity {
         MachineListReader machinelist = MachineListReader.getInstance(getApplicationContext());
 
         Intent intent = getIntent();
-        String machineType = intent.getStringExtra("machine_Type");
+        String machineName = intent.getStringExtra("machine_Type");
         String machineStatus = intent.getStringExtra("machine_Status");
         String machineBlock = intent.getStringExtra("machine_Block");
         String machineLastUsed = intent.getStringExtra("machine_LastUsed");
 
-        machineData = machinelist.getMachineDataByType(machineType);
+        machineData = machinelist.getMachineDataByType(machineName);
 
         TextView Type = findViewById(R.id.Type);
         TextView Availability = findViewById(R.id.availabilityTextView);
         TextView Block = findViewById(R.id.Block);
         TextView LastUsed = findViewById(R.id.LastUsed);
 
-        Type.setText(machineType);
-        Availability.setText(machineStatus);
-        Block.setText(machineBlock);
-        if (machineStatus != null && !machineStatus.equals("Available")) {
-            LastUsed.setVisibility(View.GONE);
-        } else {
-            LastUsed.setText(machineLastUsed);
-        }
-
+        Type.setText(machineName + "-" + machineBlock);
+        Availability.setText("Availability: " + machineStatus);
+        Block.setText("Block " + machineBlock);
+        LastUsed.setText("Last Used: " + machineLastUsed);
 
         ImageButton back_button = findViewById(R.id.backButton);
 
@@ -67,13 +64,17 @@ public class Machine extends AppCompatActivity {
         reserve_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Availability.getText().toString().equals("Available")){
-                    Toast.makeText(Machine.this, "Machine is not available", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                machinelist.getMachineDataByType(machineType).setStatus("Reserved");
+                if (!machineStatus.toString().equals("Available") && !machineStatus.toString().equals("In Use")){
+                    Toast.makeText(Machine.this, "Machine cannot be booked", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    BookingRequest bookingRequest = new BookingRequest(machineData);
+                    String json = GlobalConfig.getInstance().gson.toJson(bookingRequest);
+                    GlobalConfig.getInstance().bookingRequestRef.child(bookingRequest.getBookingUUID()).setValue(json);
+                }
                 LastUsed.setVisibility(View.GONE);
+
 
                 TextView availabilityTextView = findViewById(R.id.availabilityTextView);
                 availabilityTextView.setText(getString(R.string.Reserved));
@@ -82,7 +83,6 @@ public class Machine extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
                         machineData.setStatus("Available");
                         availabilityTextView.setText("Available");
 
@@ -144,7 +144,7 @@ public class Machine extends AppCompatActivity {
                         String machineStatus = selectedDuration + " mins left";
 
                         // Set the machine status
-                        machinelist.getMachineDataByType(machineType).setStatus(machineStatus);
+                        machinelist.getMachineDataByType(machineName).setStatus(machineStatus);
 
                         // Update the availability TextView
                         TextView availabilityTextView = findViewById(R.id.availabilityTextView);

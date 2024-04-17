@@ -67,6 +67,9 @@
                     android:textSize="25sp"
                     android:background="@drawable/filter_chip_bg_lighter"
                     android:textColor="@color/white"
+                    android:checkable="true"
+                    android:checked="false"
+
                     />
 
                 <com.google.android.material.chip.Chip
@@ -77,6 +80,8 @@
                     android:textSize="25sp"
                     android:background="@drawable/filter_chip_bg_lighter"
                     android:textColor="@color/white"
+                    android:checkable="true"
+                    android:checked="false"
                     />
 
                 <com.google.android.material.chip.Chip
@@ -87,6 +92,8 @@
                     android:textSize="25sp"
                     android:background="@drawable/filter_chip_bg_lighter"
                     android:textColor="@color/white"
+                    android:checkable="true"
+                    android:checked="false"
                     />
 
             </com.google.android.material.chip.ChipGroup>
@@ -115,7 +122,7 @@
             </View>
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group"
+                android:id="@+id/chip_machine_group"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -131,6 +138,8 @@
                     android:textSize="25sp"
                     android:background="@drawable/filter_chip_bg_lighter"
                     android:textColor="@color/white"
+                    android:checkable="true"
+                    android:checked="false"
                     />
 
                 <com.google.android.material.chip.Chip
@@ -141,6 +150,8 @@
                     android:textSize="25sp"
                     android:background="@drawable/filter_chip_bg_lighter"
                     android:textColor="@color/white"
+                    android:checkable="true"
+                    android:checked="false"
                     />
 
             </com.google.android.material.chip.ChipGroup>

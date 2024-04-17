@@ -23,7 +23,6 @@ buildscript {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
-    google()
 }
 
 dependencies {
@@ -43,7 +42,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.8")
 
     //Firebase library
-    implementation("com.google.firebase:firebase-admin:6.3.0")
+    implementation("com.google.firebase:firebase-admin:9.2.0")
+
+    //Guava
+    implementation("com.google.guava:guava:31.0.1-jre")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
