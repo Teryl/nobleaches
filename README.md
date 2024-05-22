@@ -10,3 +10,5 @@ An IoT application that tracks device enabled washing machines and provides othe
 | 1007488    | Samuel Roshan                      |
 | 1006019    | Long Raphael James                 |
 | 1007494    | Mithunbalaji Mageswari Ganeshkumar |
+
+# Open Report v3.pdf to read project details :>
